@@ -70,7 +70,7 @@ export default {
     if (!this.track || !this.track.id || this.track.id !== id) {
       this.getTrackById({ id })
         .then(() => {
-          console.log('Track loaded...')
+          console.log(this.track.preview_url)
         })
     }
   },

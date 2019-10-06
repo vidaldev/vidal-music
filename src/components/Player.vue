@@ -8,9 +8,12 @@
       <small>[{{ track.duration_ms | ms-to-mm }}]</small>
     </p>
     <p>
-      <audio :src="track.preview_url" controls @change="animationplay(track)" id="audios"></audio>
+      <button v-on:click="play(track.preview_url)" type="button">P</button>
+      <button v-on:click="pause()" type="button">Pa</button>
+      <button v-on:click="playing()" type="button">Play</button>
+      <audio :src="track.preview_url" autoplay controls @click="animationplay(track.preview_url)" id="audios" ref="audioElm" @onchange="play(track.preview_url)"></audio>
     </p>
-    <div class='bar_view' >
+    <div class='bar_view'>
       <canvas id="canvas_bar"></canvas>
       <div id="background_barview"></div>
     </div>
@@ -22,7 +25,8 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      showBarView: false
+      showBarView: false,
+      paused: null
     }
   },
   computed: {
@@ -34,7 +38,7 @@ export default {
       const audio = document.getElementById('audios')
       audio.crossOrigin = 'anonymous'
 
-      const urlmusic = track.preview_url
+      const urlmusic = track
       audio.src = urlmusic
       canvas.width = canvas.clientWidth
       canvas.height = canvas.clientHeight
@@ -49,10 +53,10 @@ export default {
       const dataArray = new Uint8Array(bufferLength)
       const WIDTH = canvas.width
       const HEIGHT = canvas.height
-      console.log('WIDTH: ', WIDTH, 'HEIGHT: ', HEIGHT)
-      const barWidth = (WIDTH / bufferLength) * 10
-      console.log('BARWIDTH: ', barWidth)
-      console.log('TOTAL WIDTH: ', (117 * 10) + (118 * barWidth))
+      // console.log('WIDTH: ', WIDTH, 'HEIGHT: ', HEIGHT)
+      const barWidth = (WIDTH / bufferLength) * 85
+      // console.log('BARWIDTH: ', barWidth)
+      // console.log('TOTAL WIDTH: ', (117 * 10) + (118 * barWidth))
       let barHeight
       let x = 0
       const renderFrame = () => {
@@ -64,8 +68,7 @@ export default {
         let r, g, b
         const bars = 100
         for (let i = 0; i < bars; i++) {
-          barHeight = (dataArray[i] * 2.5)
-          console.log(barHeight)
+          barHeight = (dataArray[i] / 3)
           if (dataArray[i] > 210) {
             // pink
             r = 250
@@ -95,11 +98,31 @@ export default {
 
           ctx.fillStyle = `rgb(${r},${g},${b})`
           ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight)
-          x += barWidth + 10
+          x += barWidth
         }
       }
       renderFrame()
       this.showBarView = true
+    },
+    play (track) {
+      console.log(track)
+      if (this.showBarView === false) {
+        this.animationplay(track)
+        console.log('barra activada')
+      }
+      this.$refs.audioElm.play()
+    },
+    pause () {
+      this.$refs.audioElm.pause()
+    },
+    playing () {
+      this.$refs.audioElm.play()
+    }
+  },
+  ready: {
+    playing () {
+      this.$refs.audioElm.play()
+      console.log('aqui')
     }
   }
 }
@@ -151,9 +174,6 @@ export default {
     height: 90px;
     position: absolute;
     top: 0;
-    background: linear-gradient(transparent,#00035f,transparent);
-    background-size: 100% 7px;
-    animation: bg 1s infinite linear;
     z-index: 2;
     opacity: 0.3;
   }
