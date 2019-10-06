@@ -7,9 +7,9 @@
             <img :src="track.album.images[0].url">
           </p>
           <p class="button-bar">
-            <a href="" class="button is-primary is-large">
-              <span class="icon" @click="selectTrack">▶</span>
-            </a>
+            <button class="level-item button is-primary">
+              <span class="icon is-small" @click="selectTrack">▶</span>
+            </button>
           </p>
         </figure>
       </div>
