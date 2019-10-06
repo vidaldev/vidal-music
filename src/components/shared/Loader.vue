@@ -11,4 +11,7 @@
     padding: 20px;
     min-height: 40vh;
   }
+  .content h1 {
+    color: white;
+  }
 </style>

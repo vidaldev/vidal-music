@@ -1,5 +1,14 @@
 @import '../../node_modules/bulma/bulma.sass';
 
+html {
+  min-height: 100%;
+  position: relative;
+  background-color: #282828;
+}
+body {
+  margin: 0;
+  margin-bottom: 168px;
+}
 .move-enter-active, 
 .move-leave-active {
   transform: translateX(0);

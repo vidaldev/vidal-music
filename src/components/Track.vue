@@ -14,13 +14,14 @@
         </div>
         <div class="media-content">
           <p class="title is-6">
-            <strong>{{ track.name }}</strong>
+            <strong>{{ track.name | cut-description }}</strong>
           </p>
           <p class="subtitle is-6">{{ track.artist }}</p>
         </div>
-        <div class="content">
-          <small>{{ track.duration_ms | ms-to-mm }}</small>
-          <nav class="level">
+      </div>
+      <div class="content media-info">
+          <small class="media_ms">{{ track.duration_ms | ms-to-mm }}</small>
+          <nav class="level media_info">
             <div class="level-left">
               <button class="level-item button is-primary">
                 <span class="icon is-small" @click="selectTrack">▶</span>
@@ -31,7 +32,6 @@
             </div>
           </nav>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -54,3 +54,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .media-info {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+  }
+  .media-info .media_info {
+    justify-content: flex-end;
+  }
+  p.title {
+    max-height: 48px;
+    overflow: hidden;
+  }
+</style>

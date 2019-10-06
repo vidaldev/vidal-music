@@ -87,4 +87,10 @@ export default {
  .button-bar {
    margin-top: 20px;
  }
+ .content ul {
+   color:white;
+ }
+ .content ul li strong {
+   color: #a3ff00;
+ }
 </style>

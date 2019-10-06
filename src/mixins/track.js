@@ -5,6 +5,7 @@ const trackMixin = {
         return
       }
 
+      // $('.info-track strong').text()
       this.$store.commit('setTrack', this.track)
     }
   }
