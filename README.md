@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Platzi Music
 
 Este es la app final al [curso Profesional de Vue.js avanzado](https://platzi.com/clases/vuejs-profesional/) en [Platzi](https://platzi.com)
@@ -105,3 +106,7 @@ npm run build
 ---
 
 ## Demo
+=======
+# vidal-music
+App final curso de Vue.js avanzado en Platzi
+>>>>>>> c1718b94e83c3dee7096660388ba466427b474f7
