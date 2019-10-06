@@ -89,6 +89,16 @@ export default {
             r = 0
             g = 219
             b = 131
+          } else if (dataArray[i] > 150) {
+            // light blue
+            r = 106
+            g = 16
+            b = 81
+          } else if (dataArray[i] > 100) {
+            // light blue
+            r = 219
+            g = 117
+            b = 197
           } else {
             // light blue
             r = 0
@@ -98,7 +108,7 @@ export default {
 
           ctx.fillStyle = `rgb(${r},${g},${b})`
           ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight)
-          x += barWidth
+          x += barWidth + 2
         }
       }
       renderFrame()
