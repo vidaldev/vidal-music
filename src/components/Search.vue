@@ -19,9 +19,6 @@
       <img src="./../assets/no_audio_green.png" slot="image">
       <p slot="body">No se encontraron resultados</p>
     </pmNotification>
-    <section class="section player_album" v-if="showList">
-      <pmPlayer></pmPlayer>
-    </section>
     <section class="section list_albumes" v-if="showList">
       <div class="container result">
         <div class="columns is-multiline">
@@ -107,7 +104,7 @@ export default {
 
 <style lang="scss" scoped>
   .result{
-    margin-top: 50px;
+    /* margin-top: 50px;*/
   }
 
   .is-active {

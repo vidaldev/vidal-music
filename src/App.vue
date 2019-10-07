@@ -18,11 +18,6 @@ export default {
 
 <style lang="scss">
   @import './scss/main.scss';
-
-  .result{
-    margin-top: 50px;
-  }
-
   .is-active {
     border: 3px #23d160 solid
   }

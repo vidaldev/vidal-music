@@ -6,7 +6,7 @@
     <div class="container">
       <div class="content has-text-centered">
         <p>
-          Cualquier texto
+          Elaborado por <u>VidalDev</u>
         </p>
       </div>
     </div>

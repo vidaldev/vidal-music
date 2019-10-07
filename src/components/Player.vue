@@ -7,11 +7,16 @@
       <strong>{{ track.name }}</strong>
       <small>[{{ track.duration_ms | ms-to-mm }}]</small>
     </p>
-    <p>
-      <button v-on:click="play(track.preview_url)" type="button">P</button>
-      <button v-on:click="pause()" type="button">Pa</button>
-      <button v-on:click="playing()" type="button">Play</button>
-      <audio :src="track.preview_url" autoplay controls @click="animationplay(track.preview_url)" id="audios" ref="audioElm" @onchange="play(track.preview_url)"></audio>
+    <p class='buttons_audio'>
+      <button v-on:click="play(track.preview_url)" type="button" v-show="bt_played" class="btn_play_button">
+        <img src="../assets/btn_player.png" alt="Play">
+      </button>
+      <button v-on:click="pause()" type="button" v-show="bt_paused" class="btn_pause_button">
+        <img src="../assets/btn_pause.png" alt="Pause">
+      </button>
+      <br>
+      <span>{{ currentTime }} / </span><span style="color:#a1fb01">{{ durationTime }}</span>
+      <audio :src="track.preview_url" autoplay @click="animationplay(track.preview_url)" id="audios" ref="audioElm" @onchange="play(track.preview_url)" @timeupdate="onTimeUpdate"></audio>
     </p>
     <div class='bar_view'>
       <canvas id="canvas_bar"></canvas>
@@ -26,13 +31,44 @@ export default {
   data () {
     return {
       showBarView: false,
-      paused: null
+      bt_paused: false,
+      bt_played: true,
+      currentTime: `0:0`,
+      durationTime: `0:30`
     }
   },
   computed: {
     ...mapState(['track'])
   },
   methods: {
+    onTimeUpdate () {
+      const secondsact = this.$refs.audioElm.duration
+      const hact = Math.floor(secondsact / 3600)
+      const mact = Math.floor((secondsact % 3600) / 60)
+      const sact = Math.floor(secondsact % 60)
+
+      const fact = [hact, mact > 9 ? mact : hact ? '0' + mact : mact || '0', sact > 9 ? sact : '0' + sact]
+        .filter(a => a)
+        .join(':')
+
+      this.durationTime = fact
+
+      const seconds = this.$refs.audioElm.currentTime
+      const hcurrent = Math.floor(seconds / 3600)
+      const mcurrent = Math.floor((seconds % 3600) / 60)
+      const scurrent = Math.floor(seconds % 60)
+
+      const fcurrent = [hcurrent, mcurrent > 9 ? mcurrent : hcurrent ? '0' + mcurrent : mcurrent || '0', scurrent > 9 ? scurrent : '0' + scurrent]
+        .filter(a => a)
+        .join(':')
+
+      this.currentTime = fcurrent
+
+      if (secondsact === seconds) {
+        this.bt_paused = false
+        this.bt_played = true
+      }
+    },
     animationplay (track) {
       const canvas = document.getElementById('canvas_bar')
       const audio = document.getElementById('audios')
@@ -70,40 +106,33 @@ export default {
         for (let i = 0; i < bars; i++) {
           barHeight = (dataArray[i] / 3)
           if (dataArray[i] > 210) {
-            // pink
-            r = 250
+            r = 194
             g = 0
-            b = 255
+            b = 250
           } else if (dataArray[i] > 200) {
-            // yellow
-            r = 250
-            g = 255
-            b = 0
+            r = 135
+            g = 0
+            b = 173
           } else if (dataArray[i] > 190) {
-            // yellow/green
-            r = 204
-            g = 255
-            b = 0
+            r = 161
+            g = 251
+            b = 1
           } else if (dataArray[i] > 180) {
-            // blue/green
-            r = 0
-            g = 219
-            b = 131
+            r = 171
+            g = 255
+            b = 25
           } else if (dataArray[i] > 150) {
-            // light blue
-            r = 106
-            g = 16
-            b = 81
+            r = 110
+            g = 173
+            b = 0
           } else if (dataArray[i] > 100) {
-            // light blue
-            r = 219
-            g = 117
-            b = 197
+            r = 97
+            g = 116
+            b = 65
           } else {
-            // light blue
-            r = 0
-            g = 199
-            b = 255
+            r = 103
+            g = 104
+            b = 100
           }
 
           ctx.fillStyle = `rgb(${r},${g},${b})`
@@ -115,24 +144,17 @@ export default {
       this.showBarView = true
     },
     play (track) {
-      console.log(track)
       if (this.showBarView === false) {
         this.animationplay(track)
-        console.log('barra activada')
       }
       this.$refs.audioElm.play()
+      this.bt_played = false
+      this.bt_paused = true
     },
     pause () {
       this.$refs.audioElm.pause()
-    },
-    playing () {
-      this.$refs.audioElm.play()
-    }
-  },
-  ready: {
-    playing () {
-      this.$refs.audioElm.play()
-      console.log('aqui')
+      this.bt_paused = false
+      this.bt_played = true
     }
   }
 }
@@ -145,7 +167,7 @@ export default {
   }
   .content {
     display: grid;
-    grid-template-columns: 126px 220px 300px auto;
+    grid-template-columns: 126px 220px 133px auto;
     align-items: center;
     grid-gap:10px;
   }
@@ -168,6 +190,21 @@ export default {
   }
   .info-image img {
     margin-top: 4px;
+  }
+  .buttons_audio {
+    text-align: center;
+  }
+  .buttons_audio span {
+    color:white
+  }
+  .buttons_audio button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+  }
+  .buttons_audio button img {
+    width: 50%;
+    cursor: pointer;
   }
   .bar_view {
     background-color: rgba(0,0,0,0.5);
