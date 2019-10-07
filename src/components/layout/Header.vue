@@ -23,7 +23,7 @@
     </div>
     <div class="hero-body">
       <div class="container has-text-centered">
-        <figure><img src="@/assets/platzi.png" alt="" srcset=""></figure>
+        <figure><img src="../../../asset/platzi.png" alt="" srcset=""></figure>
         <h1 class="title">Platzi Music</h1>
         <h2 class="subtitle">Canciones que estan <span>Vue</span>-nísimas</h2>
       </div>
