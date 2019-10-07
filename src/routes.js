@@ -3,7 +3,11 @@ import About from '@/components/About.vue'
 import TrackDetail from '@/components/TrackDetail.vue'
 
 const routes = [
-  { path: '/', component: Search, name: 'search' },
+  {
+    path: '/vidal-music/',
+    component: Search,
+    name: 'search'
+  },
   { path: '/about', component: About, name: 'about' },
   { path: '/track/:id', component: TrackDetail, name: 'track' }
 ]
