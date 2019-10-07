@@ -9,10 +9,10 @@
     </p>
     <p class='buttons_audio'>
       <button v-on:click="play(track.preview_url)" type="button" v-show="bt_played" class="btn_play_button">
-        <img src="../assets/btn_player.png" alt="Play">
+        <img src="@/assets/btn_player.png" alt="Play">
       </button>
       <button v-on:click="pause()" type="button" v-show="bt_paused" class="btn_pause_button">
-        <img src="../assets/btn_pause.png" alt="Pause">
+        <img src="@/assets/btn_pause.png" alt="Pause">
       </button>
       <br>
       <span>{{ currentTime }} / </span><span style="color:#a1fb01">{{ durationTime }}</span>
