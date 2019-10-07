@@ -51,10 +51,9 @@ export default {
         .filter(a => a)
         .join(':')
 
-      if ( fact !== NaN ) {
+      if (fact !== isNaN) {
         this.durationTime = fact
       }
-      
 
       const seconds = this.$refs.audioElm.currentTime
       const hcurrent = Math.floor(seconds / 3600)
