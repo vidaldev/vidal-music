@@ -11,7 +11,7 @@
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <router-link to='/vidal-music' class="navbar-item">Buscar</router-link>
+                <router-link to='/vidal-music/' class="navbar-item">Buscar</router-link>
               </p>
               <p class="control">
                 <router-link to='/vidal-music/about' class="navbar-item">Nosotros</router-link>
